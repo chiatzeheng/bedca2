@@ -1,3 +1,6 @@
+//DIT-FT-1B09
+//2227861
+//Timothy Chia 
 const mysql = require("mysql2/promise");
 //Using mysql2 in order to perform async/await queries
 let connection;
