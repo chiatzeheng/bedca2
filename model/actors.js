@@ -15,6 +15,7 @@ let User = {
   },
  
   postActor: async (first_name, last_name) => {
+    console.log(first_name, last_name)
     //async query that inserts a new actor into the database
     return await db.query("INSERT INTO actor (first_name, last_name) VALUES (?, ?);",[first_name, last_name]);
   },
@@ -65,12 +66,36 @@ let User = {
       email,
     ]);
   },
-
-  postFilm: async (title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) => {
-    //async query that inserts a new film into the database
-    return await db.query("INSERT INTO film (title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?,?,?,?,?,?,?,?,?,?)", [title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features]);
+  postFilm: async (title,description,release_year, language_id,rental_duration,rental_rate, length,replacement_cost, rating,special_features) => {
+    //async query that returns all the categories for a film
+    return await db.query("INSERT INTO film (title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?,?,?,?,?,?,?,?,?,?)",[title,description,release_year, language_id,rental_duration,rental_rate, length,replacement_cost, rating,special_features]);
+  },
+  putFilm: async (title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features, default_title, default_description, default_release_year, default_language_id, default_rental_duration, default_rental_rate, default_length, default_replacement_cost, default_rating, default_special_features, id) => {
+    //async query that updates a film's details
+    return await db.query("UPDATE FILM SET title = coalesce(?, ?), description = coalesce(?, ?), release_year = coalesce(?, ?), language_id = coalesce(?, ?), rental_duration = coalesce(?, ?), rental_rate = coalesce(?, ?), length = coalesce(?, ?), replacement_cost = coalesce(?, ?), rating = coalesce(?, ?), special_features = coalesce(?, ?) WHERE film_id = ?",[title, default_title, description, default_description, release_year, default_release_year, language_id, default_language_id, rental_duration, default_rental_duration, rental_rate, default_rental_rate, length, default_length, replacement_cost, default_replacement_cost, rating, default_rating, special_features, default_special_features, id]);
+  },
+  getFilms: async (id) => {
+    //async query that returns all the categories for a film
+    return await db.query("SELECT * FROM film WHERE film_id =?",[id]);
+  },
+  getCity: async (city) => {
+    //async query that checks if city exists in database
+    return await db.query("SELECT country_id, city FROM city WHERE city = ?", [city])
+   },
+   getCountry: async (country) => {
+    //async query that checks if country exists in database
+    return await db.query("SELECT country_id, country FROM country WHERE country = ?", [country])
+    },
+  postCity: async (city, id) => {
+    //async query that inserts a new country and city into the database
+    return await db.query("INSERT INTO city (city, country_id) VALUES(?, ?)", [city, id])
+  },
+  postCountry: async (country) => {
+    return await db.query("INSERT INTO country (country) VALUES(?)", [country])
+  },
+  getCountryById: async(id) => {
+    return await db.query("SELECT country_id, country FROM country WHERE country_id = ?", [id])
   },
 };
-
 
 module.exports = User;
