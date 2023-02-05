@@ -9,9 +9,9 @@ let connection;
 try {
   connection = mysql.createPool({
     host: "localhost",
-    user: "bed_dvd_root",
+    user: "BED_DVD_ROOT",
     password: "pa$$woRD123",
-    database: "bed_dvd_db",
+    database: "BED_DVD_DB",
   });
   console.log("connected")
 } catch (error) {
